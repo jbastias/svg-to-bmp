@@ -19,10 +19,14 @@ fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
 }
 
 fn main() {
- 
+
+    let args: Vec<String> = env::args().collect();
+    println!("{}", args[1]);
+
+    let filename: &str = &args[1];
+
     let mut path: String = env::current_dir().unwrap().as_os_str().to_str().unwrap().to_string();
-    // let filename: &str = "/big-svg.svg";
-    let filename: &str = "/really-big.svg";
+    path.push_str("/");
     path.push_str(filename);
 
     let re_xy = Regex::new(r#"<svg width="(\d+)" height="(\d+)">$"#).unwrap();
@@ -64,8 +68,10 @@ fn main() {
 
     }
 
-    // let _ = img.save("./big-svg.bmp");
-    let _ = img.save("./really-big.bmp");
-    
+    let mut path1: String = env::current_dir().unwrap().as_os_str().to_str().unwrap().to_string();
+    path1.push_str("/");
+    path1.push_str(filename);
+    path1.push_str(".bmp");
+    let _ = img.save(path1);
 }
 
